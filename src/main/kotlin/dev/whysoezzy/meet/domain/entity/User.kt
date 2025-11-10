@@ -27,6 +27,12 @@ class User(
     @Column(length = 255)
     var email: String? = null,
     
+    @Column(length = 255)
+    var telegram: String? = null,
+    
+    @Column(length = 255)
+    var habr: String? = null,
+    
     @ManyToMany
     @JoinTable(
         name = "user_interests",
