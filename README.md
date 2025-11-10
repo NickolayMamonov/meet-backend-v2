@@ -241,9 +241,7 @@ netstat -ano | findstr :6379
 - [Flyway Documentation](https://flywaydb.org/documentation/)
 - [JWT Best Practices](https://tools.ietf.org/html/rfc8725)
 
-## 📞 Поддержка
 
-Для вопросов см. документацию в `/docs` или создавайте Issues.
 
 ---
 
