@@ -1,5 +1,6 @@
 package dev.whysoezzy.meet.domain.repository
 
+import dev.whysoezzy.meet.domain.entity.Community
 import dev.whysoezzy.meet.domain.entity.Meeting
 import dev.whysoezzy.meet.domain.entity.MeetingStatus
 import org.springframework.data.domain.Page
@@ -91,6 +92,18 @@ interface MeetingRepository : JpaRepository<Meeting, Long> {
     """)
     fun findByParticipantId(
         @Param("userId") userId: Long,
+        pageable: Pageable
+    ): Page<Meeting>
+    
+    fun findByCommunityHost(
+        communityHost: Community,
+        pageable: Pageable
+    ): Page<Meeting>
+    
+    fun findByCommunityHostAndStatusAndTimeGreaterThanEqual(
+        communityHost: Community,
+        status: MeetingStatus,
+        time: Long,
         pageable: Pageable
     ): Page<Meeting>
 }
