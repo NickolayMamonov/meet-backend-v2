@@ -8,6 +8,7 @@ import dev.whysoezzy.meet.domain.entity.User
 import dev.whysoezzy.meet.domain.repository.TagRepository
 import dev.whysoezzy.meet.domain.repository.UserRepository
 import dev.whysoezzy.meet.security.SecurityUtils
+import dev.whysoezzy.meet.service.storage.FileStorageService
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +19,8 @@ private val logger = KotlinLogging.logger {}
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val tagRepository: TagRepository
+    private val tagRepository: TagRepository,
+    private val fileStorageService: FileStorageService
 ) {
     
     @Transactional(readOnly = true)
@@ -108,10 +110,17 @@ class UserService(
             ResourceNotFoundException("User not found")
         }
         
-        // For now, just generate a placeholder URL
-        // In production, you would upload to S3 or similar service
-        val fileName = "${currentUserId}_${System.currentTimeMillis()}_${file.originalFilename}"
-        val imageUrl = "https://storage.example.com/avatars/$fileName"
+        // Delete old avatar if exists
+        user.imageUrl?.let { oldImageUrl ->
+            try {
+                fileStorageService.delete(oldImageUrl)
+            } catch (e: Exception) {
+                logger.warn { "Failed to delete old avatar: ${e.message}" }
+            }
+        }
+        
+        // Upload new avatar
+        val imageUrl = fileStorageService.store(file, "avatars")
         
         user.imageUrl = imageUrl
         userRepository.save(user)
