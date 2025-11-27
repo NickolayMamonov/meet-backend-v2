@@ -108,4 +108,38 @@ class UserController(
             message = "Avatar uploaded successfully"
         )
     }
+    
+    @PostMapping("/me/fcm-token")
+    @Operation(
+        summary = "Register FCM token",
+        description = "Registers the user's device FCM token for push notifications. Requires authentication."
+    )
+    fun registerFcmToken(
+        @Valid @RequestBody request: RegisterFcmTokenRequest
+    ): ApiResponse<Unit> {
+        logger.info { "POST /api/v1/users/me/fcm-token" }
+        
+        userService.registerFcmToken(request.fcmToken)
+        
+        return ApiResponse.success(
+            data = Unit,
+            message = "FCM token registered successfully"
+        )
+    }
+    
+    @DeleteMapping("/me/fcm-token")
+    @Operation(
+        summary = "Unregister FCM token",
+        description = "Removes the user's FCM token. Push notifications will stop. Requires authentication."
+    )
+    fun unregisterFcmToken(): ApiResponse<Unit> {
+        logger.info { "DELETE /api/v1/users/me/fcm-token" }
+        
+        userService.unregisterFcmToken()
+        
+        return ApiResponse.success(
+            data = Unit,
+            message = "FCM token unregistered successfully"
+        )
+    }
 }

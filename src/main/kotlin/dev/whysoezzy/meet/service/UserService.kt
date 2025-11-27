@@ -130,6 +130,36 @@ class UserService(
         return UploadAvatarResponse(imageUrl)
     }
     
+    @Transactional
+    fun registerFcmToken(fcmToken: String) {
+        val currentUserId = SecurityUtils.getCurrentUserId()
+        logger.info { "Registering FCM token for user: $currentUserId" }
+        
+        val user = userRepository.findById(currentUserId).orElseThrow {
+            ResourceNotFoundException("User not found")
+        }
+        
+        user.fcmToken = fcmToken
+        userRepository.save(user)
+        
+        logger.info { "FCM token registered successfully for user: $currentUserId" }
+    }
+    
+    @Transactional
+    fun unregisterFcmToken() {
+        val currentUserId = SecurityUtils.getCurrentUserId()
+        logger.info { "Unregistering FCM token for user: $currentUserId" }
+        
+        val user = userRepository.findById(currentUserId).orElseThrow {
+            ResourceNotFoundException("User not found")
+        }
+        
+        user.fcmToken = null
+        userRepository.save(user)
+        
+        logger.info { "FCM token unregistered successfully for user: $currentUserId" }
+    }
+    
     // Extension function for mapping
     
     private fun User.toProfileDto(): UserProfileDto {

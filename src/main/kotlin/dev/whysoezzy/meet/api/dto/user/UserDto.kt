@@ -3,6 +3,7 @@ package dev.whysoezzy.meet.api.dto.user
 import dev.whysoezzy.meet.api.dto.common.SocialMediaDto
 import dev.whysoezzy.meet.api.dto.common.TagDto
 import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
 // Response DTOs
@@ -46,6 +47,11 @@ data class UpdateInterestsRequest(
 data class UpdateSocialsRequest(
     val telegram: String? = null,
     val habr: String? = null
+)
+
+data class RegisterFcmTokenRequest(
+    @field:NotBlank(message = "FCM token is required")
+    val fcmToken: String
 )
 
 data class UploadAvatarResponse(

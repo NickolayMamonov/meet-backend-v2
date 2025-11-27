@@ -33,6 +33,9 @@ class User(
     @Column(length = 255)
     var habr: String? = null,
     
+    @Column(name = "fcm_token", length = 512)
+    var fcmToken: String? = null,
+    
     @ManyToMany
     @JoinTable(
         name = "user_interests",
