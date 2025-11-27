@@ -241,7 +241,7 @@ netstat -ano | findstr :6379
 - [Flyway Documentation](https://flywaydb.org/documentation/)
 - [JWT Best Practices](https://tools.ietf.org/html/rfc8725)
 
-
+--- Добавить в проект serviceAccountKey.json!!!!
 
 ---
 
