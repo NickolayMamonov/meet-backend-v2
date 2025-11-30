@@ -59,3 +59,5 @@ logs/
 # Application
 application-local.yml
 application-prod.yml
+
+config/firebase/serviceAccountKey.json

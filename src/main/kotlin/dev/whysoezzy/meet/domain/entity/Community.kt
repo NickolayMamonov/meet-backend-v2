@@ -15,6 +15,10 @@ class Community(
     @Column(nullable = false, columnDefinition = "TEXT")
     var description: String,
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
+    var owner: User,
+    
     @ManyToMany
     @JoinTable(
         name = "community_tags",
@@ -35,6 +39,14 @@ class Community(
     var meetings: MutableList<Meeting> = mutableListOf()
     
 ) : BaseEntity() {
+    
+    fun addTag(tag: Tag) {
+        tags.add(tag)
+    }
+    
+    fun removeTag(tag: Tag) {
+        tags.remove(tag)
+    }
     
     fun addSubscriber(user: User) {
         subscribers.add(user)

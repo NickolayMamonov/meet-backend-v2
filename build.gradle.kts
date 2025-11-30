@@ -47,6 +47,9 @@ dependencies {
 	// AWS S3
 	implementation("software.amazon.awssdk:s3:2.21.26")
 	
+	// Firebase Cloud Messaging
+	implementation("com.google.firebase:firebase-admin:9.2.0")
+	
 	// API Documentation - UPDATED for Spring Boot 3.5.x compatibility
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
 	
