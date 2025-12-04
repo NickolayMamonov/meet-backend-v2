@@ -85,6 +85,11 @@ app:
       - "*"
     allow-credentials: true
 
+firebase:
+  enabled: ${FIREBASE_ENABLED:true}
+  credentials-path: ${FIREBASE_CREDENTIALS_PATH:./serviceAccountKey.json}
+  project-id: ${FIREBASE_PROJECT_ID:meet-backend-v2}
+
 logging:
   level:
     root: INFO
